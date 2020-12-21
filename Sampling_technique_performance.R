@@ -1,0 +1,39 @@
+#
+#
+#
+#******************************************************************************************************
+#*************************Get distributions and KS statistics******************************************
+#******************************************************************************************************
+#
+#
+#
+get_cdf_values<-function(x){
+  cdf<-ecdf(x)
+  n<-length(x)
+  p<-c()
+  for (i in 1:n){
+    p[i]<-cdf(x[i])  
+  }
+  return(p)
+}
+graph_performance<-function(graph,sample_size,hops=30,FUN){
+  #graph_properties
+  dd<-degree_dist(graph)
+  cc<-clust_coeff(graph)
+  hp<-hop_plot(graph,hops)
+  dd_cdf<-get_cdf_values(dd)
+  cc_cdf<-get_cdf_values(cc)
+  hp_cdf<-get_cdf_values(hp)
+  #get sample graph properties
+  sample_graph<-FUN(graph,sample_size)
+  dd_s<-degree_dist(sample_graph)
+  cc_s<-clust_coeff(sample_graph)
+  hp_s<-hop_plot(sample_graph,hops)
+  dd_s_cdf<-get_cdf_values(dd_s)
+  cc_s_cdf<-get_cdf_values(cc_s)
+  hp_s_cdf<-get_cdf_values(hp_s)
+  dd_ks<-(ks.test(dd_cdf,dd_s_cdf,alternative="greater"))$statistic
+  cc_ks<-(ks.test(cc_cdf,cc_s_cdf,alternative="greater"))$statistic
+  hp_ks<-(ks.test(hp_cdf,hp_s_cdf,alternative="greater"))$statistic
+  return(c(dd_ks,cc_ks,hp_ks))
+}
