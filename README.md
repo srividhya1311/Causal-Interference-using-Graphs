@@ -1,5 +1,5 @@
 # Study on GATE estimation
-Code relevant to Semester proejct "Estimation of causal effects under Interference" - Fall 2020
+Code (developed by self) relevant to Semester proejct "Estimation of causal effects under Interference" - Fall 2020
 ## File: Static_graph_properties.R
 Code functions for determining the static graph properties like degree distribution, clustering coefficient and reachable nodes in a given graph
 ## File: Sampling_techniques.R
